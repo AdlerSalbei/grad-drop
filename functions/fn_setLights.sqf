@@ -1,11 +1,10 @@
 #include "..\component.hpp"
 
-params ["_light", "_light_color", "_light_ambi"];
+params ["_light", "_lightColor", "_lightAmbi"];
 
 if !(_light isEqualType []) then {_light = [_light]};
 
 {
-    _x setLightColor _light_color;
-    _x setLightAmbient _light_ambi;
-    false
-} count _light;
+    _x setLightColor _lightColor;
+    _x setLightAmbient _lightAmbi;
+}forEach _light;
