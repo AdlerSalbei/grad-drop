@@ -1,110 +1,113 @@
 #include "..\component.hpp"
 
-params ["_units","_plane","_soundPlane","_jumpmaster","_planeLights","_waitBeforeJump","_onLanding"];
-_planeLights params ["_lightWhite","_lightGreen","_lightRed"];
-
 if (!isServer) exitWith {};
+params ["","","","","","_waitBeforeJump",""];
 
-sleep _waitBeforeJump;
+[{
+    params ["_units", "_plane", "", "_jumpmaster", "_planeLights", "", "_onLanding"];
+    _planeLights params ["_lightWhite","","_lightRed"];
+    [_units,_plane,_onLanding] remoteExec ["grad_drop_fnc_jump",0,false];
 
-[_units,_plane,_onLanding] remoteExec ["grad_drop_fnc_jump",0,false];
+    [_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-[_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+    _lightRed hideObjectGlobal false;
+    _lightWhite hideObjectGlobal true;
 
-_lightRed hideObjectGlobal false;
-_lightWhite hideObjectGlobal true;
+    [{
+        params ["","_plane"];
+        _plane setVariable ["grad_drop_lightStatus","RED",true];
 
-sleep 0.2;
+        [{
+            params ["_units","","","_jumpmaster"];
+            [_jumpmaster,"grad_drop_jumpmaster1",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-_plane setVariable ["grad_drop_lightStatus","RED",true];
+            [{
+                params ["_units","","","_jumpmaster"];
+                [_jumpmaster,"grad_drop_jumpmaster2",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-sleep 3;
+                [{
+                    params ["_units","_plane","","_jumpmaster"];
+                    [_jumpmaster,"grad_drop_jumpmaster3",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-[_jumpmaster,"grad_drop_jumpmaster1",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                    _plane animate ["ramp_top", 0];
+                    _plane animate ["ramp_bottom", 0];
 
-sleep 5;
+                    [{
+                        params ["_units","_plane","","_jumpmaster"];
+                        [_jumpmaster,"grad_drop_jumpmaster4",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-[_jumpmaster,"grad_drop_jumpmaster2",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                        //todo add missionConfig entry for parameter
+                        if (false) then {
+                            [_plane] call GRAD_drop_fnc_spawnAA;
+                        };
 
-sleep 10;
+                        [{
+                            params ["_units","","","_jumpmaster"];
+                            [_jumpmaster,"grad_drop_rearDoor",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-[_jumpmaster,"grad_drop_jumpmaster3",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                            [{
+                                params ["_units","_plane","","_jumpmaster"];
+                                [_jumpmaster,"grad_drop_jumpmaster5",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-_plane animate ["ramp_top", 0];
-_plane animate ["ramp_bottom", 0];
+                                _plane animate ["ramp_top", 1];
+                                _plane animate ["ramp_bottom", 1];
 
-sleep 10;
+                                [_plane,_jumpmaster] spawn grad_drop_fnc_jumpMasterAnimation;
 
-[_jumpmaster,"grad_drop_jumpmaster4",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                                [{
+                                    params ["_units","","","_jumpmaster"];
+                                    [_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
+                                    [{
+                                        params ["","","","","_planeLights"];
+                                        _lightGreen hideObjectGlobal false;
+                                        _lightRed hideObjectGlobal true;
 
-[_plane, _units] spawn {
-    private _plane = _this select 0;
-    private _units = _this select 1;
+                                        [{
+                                            params ["","_plane"];
+                                            _plane setVariable ["grad_drop_lightStatus","GREEN",true];
 
-  
-    [] remoteExec ["resetCamShake"];
-    
-    for "_i" from 0 to 120 do {
-        private _distance = 20 + random 70;
-        private _position = _plane getRelPos [_distance, ((random 30) - (random 60))];
-        private _zPos = getPos _plane select 2;
-        _position set [2, (_zPos + random 10 - random 20)];
+                                            [{
+                                                params ["_units","","","_jumpmaster"];
+                                                [_jumpmaster,"grad_drop_jumpmaster6",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
-        private _strength = linearConversion [90, 0, _distance, 0, 7, true];
-        private _delay = 0.5 + random 2;
-        [_position, _delay, _strength, _plane] remoteExec ["GRAD_drop_fnc_spawnAA", 0,false];
-        sleep _delay;
-    };
-};
+                                                [
+                                                    {
+                                                        ({_x distance (_this select 1) < 30} count (_this select 0) == 0)
+                                                    },{
+                                                        params ["","_plane"];
+                                                        _plane setVariable ["grad_drop_lightStatus","DELETE",true];
+                                                        [{
+                                                            params ["","_plane","_soundPlane","_jumpmaster","_planeLights"];
 
-sleep 15;
+                                                            private _posCache = getPos _plane;
+                                                            private _dirCache = getDir _plane;
 
-[_jumpmaster,"grad_drop_rearDoor",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                                                            detach _plane;
+                                                            deleteVehicle _jumpmaster;
 
-sleep 1.3;
+                                                            {
+                                                                deleteVehicle _x;
+                                                            } forEach _planeLights;
 
+                                                            deleteVehicle _plane;
 
-[_jumpmaster,"grad_drop_jumpmaster5",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+                                                            {
+                                                                deleteVehicle _x;
+                                                            } forEach crew _soundPlane;
 
-_plane animate ["ramp_top", 1];
-_plane animate ["ramp_bottom", 1];
-
-[_plane,_jumpmaster] spawn grad_drop_fnc_jumpMasterAnimation;
-
-sleep 36;
-
-[_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
-
-sleep 1;
-
-_lightGreen hideObjectGlobal false;
-_lightRed hideObjectGlobal true;
-
-sleep 0.2;
-
-_plane setVariable ["grad_drop_lightStatus","GREEN",true];
-
-sleep 0.5;
-
-[_jumpmaster,"grad_drop_jumpmaster6",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
-
-sleep 5;
-
-waitUntil {
-    sleep 2; 
-    {_x distance _plane < 30} count _units == 0
-};
-
-_plane setVariable ["grad_drop_lightStatus","DELETE",true];
-sleep 0.5;
-private _posCache = getPos _plane;
-private _dirCache = getDir _plane;
-
-detach _plane;
-deleteVehicle _jumpmaster;
-{deleteVehicle _x; false} count _planeLights;
-deleteVehicle _plane;
-
-{deleteVehicle _x; false} forEach crew _soundPlane;
-deleteVehicle _soundPlane;
+                                                            deleteVehicle _soundPlane;
+                                                        }, _this, 0.5] call CBA_fnc_waitAndExecute;
+                                                    }, _this] call CBA_fnc_waitUntilAndExecute;
+                                            }, _this, 10] call CBA_fnc_waitAndExecute;
+                                        }, _this, 0.2] call CBA_fnc_waitAndExecute;
+                                    }, _this, 1] call CBA_fnc_waitAndExecute;
+                                }, _this, 36] call CBA_fnc_waitAndExecute;
+                            }, _this, 1.3] call CBA_fnc_waitAndExecute;
+                        }, _this, 15] call CBA_fnc_waitAndExecute;
+                    }, _this, 10] call CBA_fnc_waitAndExecute;
+                }, _this, 10] call CBA_fnc_waitAndExecute;
+            }, _this, 5] call CBA_fnc_waitAndExecute;
+        }, _this, 3] call CBA_fnc_waitAndExecute;
+    }, _this, 0.2] call CBA_fnc_waitAndExecute;
+}, _this, _waitBeforeJump] call CBA_fnc_waitAndExecute;

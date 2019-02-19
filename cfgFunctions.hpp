@@ -14,10 +14,12 @@ class grad_drop {
     class effects {
         file = MODULES_DIRECTORY\grad-drop\functions\effects;
 
+        class addEngineExhausts;
         class addLightpoints;
+        class addSmoke;
         class playSound;
         class setLights;
-        class spawnAA;
+        class spawnAAEffects;
         class spawnLights;
     };
     class init {
@@ -25,16 +27,18 @@ class grad_drop {
 
         class initDrop;
         class jump;
+        class spawnAA;
         class spawnPlane;
         class startProcedure;
-        class switchMove;
     };
     class player {
         file = MODULES_DIRECTORY\grad-drop\functions\player;
 
+        class getPosPlayer;
         class moveInPlane;
         class moveInPlaneCut;
         class moveInPlanePos;
         class moveInRemote;
+        class sortUnits;
     };
 };
