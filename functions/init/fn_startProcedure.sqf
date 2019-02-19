@@ -1,6 +1,6 @@
 #include "..\component.hpp"
 
-params ["_units","_plane","_soundPlane","_jm","_planeLights","_waitBeforeJump","_onLanding"];
+params ["_units","_plane","_soundPlane","_jumpmaster","_planeLights","_waitBeforeJump","_onLanding"];
 _planeLights params ["_lightWhite","_lightGreen","_lightRed"];
 
 if (!isServer) exitWith {};
@@ -9,7 +9,7 @@ sleep _waitBeforeJump;
 
 [_units,_plane,_onLanding] remoteExec ["grad_drop_fnc_jump",0,false];
 
-[_jm,"grad_drop_jm0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 _lightRed hideObjectGlobal false;
 _lightWhite hideObjectGlobal true;
@@ -20,22 +20,22 @@ _plane setVariable ["grad_drop_lightStatus","RED",true];
 
 sleep 3;
 
-[_jm,"grad_drop_jm1",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster1",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 sleep 5;
 
-[_jm,"grad_drop_jm2",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster2",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 sleep 10;
 
-[_jm,"grad_drop_jm3",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster3",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 _plane animate ["ramp_top", 0];
 _plane animate ["ramp_bottom", 0];
 
 sleep 10;
 
-[_jm,"grad_drop_jm4",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster4",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 
 [_plane, _units] spawn {
@@ -60,21 +60,21 @@ sleep 10;
 
 sleep 15;
 
-[_jm,"grad_drop_rearDoor",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_rearDoor",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 sleep 1.3;
 
 
-[_jm,"grad_drop_jm5",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster5",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 _plane animate ["ramp_top", 1];
 _plane animate ["ramp_bottom", 1];
 
-[_plane,_jm] spawn grad_drop_fnc_jumpMasterAnimation;
+[_plane,_jumpmaster] spawn grad_drop_fnc_jumpMasterAnimation;
 
 sleep 36;
 
-[_jm,"grad_drop_jm0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster0",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 sleep 1;
 
@@ -87,7 +87,7 @@ _plane setVariable ["grad_drop_lightStatus","GREEN",true];
 
 sleep 0.5;
 
-[_jm,"grad_drop_jm6",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
+[_jumpmaster,"grad_drop_jumpmaster6",_units] remoteExec ["grad_drop_fnc_playSound",0,false];
 
 sleep 5;
 
@@ -102,7 +102,7 @@ private _posCache = getPos _plane;
 private _dirCache = getDir _plane;
 
 detach _plane;
-deleteVehicle _jm;
+deleteVehicle _jumpmaster;
 {deleteVehicle _x; false} count _planeLights;
 deleteVehicle _plane;
 

@@ -12,5 +12,5 @@ private _smoke = [];
 [{
     isNull (_this select 0)
 },{
-    (deleteVehicle _x) forEach (_this select 1);
+    {deleteVehicle _x} forEach (_this select 1);
 }, [_plane, _smoke]] call CBA_fnc_waitUntilAndExecute;

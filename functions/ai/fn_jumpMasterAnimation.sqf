@@ -1,10 +1,10 @@
 #include "..\component.hpp"
 
-params ["_plane","_jm"];
+params ["_plane","_jumpmaster"];
 
 {
     sleep (_x select 0);
-    [_jm,_x select 1] call grad_drop_fnc_switchMove;
+    [_jumpmaster,_x select 1] call grad_drop_fnc_switchMove;
     false
 } count [
     [3,"ACE_AmovPercMstpScapWnonDnon_AmovPercMstpSnonWnonDnon"],
@@ -13,13 +13,13 @@ params ["_plane","_jm"];
 ];
 
 
-_jm setFormDir (getDir _plane) + 17;
-_jm setDir (getDir _plane) + 17;
+_jumpmaster setFormDir (getDir _plane) + 17;
+_jumpmaster setDir (getDir _plane) + 17;
 
 
 {
     sleep (_x select 0);
-    [_jm,_x select 1] call grad_drop_fnc_switchMove;
+    [_jumpmaster,_x select 1] call grad_drop_fnc_switchMove;
     false
 } count [
     [3,"AidlPknlMstpSnonWnonDnon_G01"],

@@ -1,3 +1,3 @@
 #define PREFIX grad
-#define COMPONENT halojump
+#define COMPONENT drop
 #include "\x\cba\addons\main\script_macros_mission.hpp"

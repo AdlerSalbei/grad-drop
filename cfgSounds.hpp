@@ -4,43 +4,43 @@
 
 #define SOUNDPATH(var1) #var1
 
-class grad_drop_jm0
+class grad_drop_jumpmaster0
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster0_new.ogg), 5, 1};
     titles[] = {};
 };
 
-class grad_drop_jm1
+class grad_drop_jumpmaster1
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster1_new.ogg), 15, 1};
     titles[] = {};
 };
 
-class grad_drop_jm2
+class grad_drop_jumpmaster2
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster2_new.ogg), 15, 1};
     titles[] = {};
 };
 
-class grad_drop_jm3
+class grad_drop_jumpmaster3
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster3_new.ogg), 15, 1};
     titles[] = {};
 };
 
-class grad_drop_jm4
+class grad_drop_jumpmaster4
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster4_new.ogg), 15, 1};
     titles[] = {};
 };
 
-class grad_drop_jm5
+class grad_drop_jumpmaster5
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster5_new.ogg), 15, 1};
     titles[] = {};
 };
 
-class grad_drop_jm6
+class grad_drop_jumpmaster6
 {
     sound[] = {SOUNDPATH(MODULES_DIRECTORY\grad-drop\data\jumpmaster6_new.ogg), 15, 1};
     titles[] = {};

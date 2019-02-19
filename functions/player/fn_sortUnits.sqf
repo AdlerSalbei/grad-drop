@@ -12,7 +12,7 @@ private _lastDistance = 0;
         private _cutOff = true;
         private _index = (_forEachIndex) -1;
         while {_cutOff} do {
-            if (((_plane distance (_slotLeft select _index)) < _distance) || {_index <= 0}) exitWith {
+            if (((_plane distance (_return select _index)) < _distance) || {_index <= 0}) exitWith {
                 _cutOff = false;
             };
             _index = _index -1;
@@ -33,7 +33,7 @@ private _lastDistance = 0;
                 _newArray pushBack (_return select _i);
             };
         };
-
+        _return = _newArray;
     };
 }forEach (allUnits inAreaArray _areaArray);
 

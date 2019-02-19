@@ -3,25 +3,38 @@
 #endif
 
 class grad_drop {
-    class common {
-        file = MODULES_DIRECTORY\grad-drop\functions;
+    class ai {
+        file = MODULES_DIRECTORY\grad-drop\functions\ai;
 
-        class addLightpoints;
-        class initHaloJump;
-        class jump;
         class jumpAI;
         class jumpMasterAnimation;
-        class moveInPlane;
-        class moveInPlaneCut;
-        class moveInRemote;
-        class playSound;
         class removeAllGear;
+        class spawnJumpmaster;
+    };
+    class effects {
+        file = MODULES_DIRECTORY\grad-drop\functions\effects;
+
+        class addLightpoints;
+        class playSound;
         class setLights;
         class spawnAA;
-        class spawnJumpmaster;
         class spawnLights;
+    };
+    class init {
+        file = MODULES_DIRECTORY\grad-drop\functions\init;
+
+        class initDrop;
+        class jump;
         class spawnPlane;
         class startProcedure;
         class switchMove;
+    };
+    class player {
+        file = MODULES_DIRECTORY\grad-drop\functions\player;
+
+        class moveInPlane;
+        class moveInPlaneCut;
+        class moveInPlanePos;
+        class moveInRemote;
     };
 };
